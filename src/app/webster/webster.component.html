@@ -1,0 +1,24 @@
+<div class="w3-content">
+<form name="dictForm">
+   <mat-form-field>
+        <mat-label>Word</mat-label>
+        <input matInput [(ngModel)]="word" placeholder="Word"  name="Word">
+    </mat-form-field>
+    <button mat-button (click)="getDef()">Search</button>
+</form>
+
+  <mat-list>
+    <div mat-subheader>Defenitions</div>
+    <mat-list-item *ngFor="let d of def; let i = index">
+      <div mat-line>{{i+1}} - {{d.fl |uppercase}}:</div>
+      <div mat-line> 
+          <mat-list>
+              <mat-list-item *ngFor="let sd of d.shortdef">
+                <div mat-line>{{sd}}:</div>
+              </mat-list-item>
+        </mat-list>
+        </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</div>
