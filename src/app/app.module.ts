@@ -17,7 +17,7 @@ import { WebsterComponent } from './webster/webster.component';
     AppComponent,
     HomeComponent,
     HomeComponentComponent,
-    WebsterComponent
+    WebsterComponent,
   ],
   imports: [
     BrowserModule,

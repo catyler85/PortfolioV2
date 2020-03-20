@@ -1,24 +1,59 @@
-<div class="w3-content">
-<form name="dictForm">
-   <mat-form-field>
-        <mat-label>Word</mat-label>
-        <input matInput [(ngModel)]="word" placeholder="Word"  name="Word">
-    </mat-form-field>
-    <button mat-button (click)="getDef()">Search</button>
-</form>
+<div class="w3-sidebar w3-bar-block w3-collapse w3-animate-left" style="width:200px;" id="mySidebar">
+	<h1>Searched Terms</h1>
+	<mat-list>
+		<mat-list-item *ngFor="let st of searchedTerms">
+			<a mat-line (click)="getDef(st)" >{{st}}</a>
+		</mat-list-item>
+	</mat-list>
+</div>
 
-  <mat-list>
-    <div mat-subheader>Defenitions</div>
-    <mat-list-item *ngFor="let d of def; let i = index">
-      <div mat-line>{{i+1}} - {{d.fl |uppercase}}:</div>
-      <div mat-line> 
-          <mat-list>
-              <mat-list-item *ngFor="let sd of d.shortdef">
-                <div mat-line>{{sd}}:</div>
-              </mat-list-item>
-        </mat-list>
-        </div>
-      <mat-divider></mat-divider>
-    </mat-list-item>
-  </mat-list>
+<button class="w3-button w3-xlarge w3-hide-large" style="margin-top: 12vh;" (click)="w3_open()">&#9776;</button>
+<div class="w3-content w3-center" style="margin-top: 80px;">
+
+	<span class="mat-display-1">Dictionary App</span>
+	<hr>
+	<p>Enter a search term below and discover the definition of your word. 
+	You can also explore other words by clicking on a synonym or antonym below the definitions. 
+	The sidebar to the right keeps track of each term you searched for 
+	in case you want to easily go back to a specific word.</p>
+
+	<form name="dictForm">
+		<mat-form-field>
+			<mat-label>Define</mat-label>
+			<input matInput [(ngModel)]="word" placeholder="Search Term" name="Word">
+		</mat-form-field>
+		<button mat-button (click)="getDef(word)">Search</button>
+	</form>
+
+
+
+	<mat-list>
+		<div mat-subheader><h2>{{"Results for " + definitions[0].headword}}</h2></div>
+		<mat-list-item *ngFor="let d of definitions; let i = index;">
+			<div mat-line>{{i+1}}) {{d.fl |uppercase}}:</div>
+			<div mat-line> 
+				<mat-list>
+					<mat-list-item *ngFor="let sd of d.shortdef">
+						<div mat-line>{{sd}}</div>
+					</mat-list-item>
+				</mat-list>
+			</div>
+
+			<div mat-line> <h2>Synonyms</h2></div>
+			<div mat-line *ngFor="let syn of d.syns">
+				<i *ngFor="let s of syn" (click)="getDef(s)">{{s}} - </i>
+			</div>
+			<div mat-line><h2>Antonyms</h2></div>
+			<div mat-line *ngFor="let ant of d.ants">
+				<i *ngFor="let a of ant" (click)="getDef(a)">{{a}} - </i>
+			</div>
+			<mat-divider></mat-divider>
+		</mat-list-item>
+	</mat-list>
+	<div *ngIf="seeAlso.length > 0">See also: 
+		<i *ngFor="let sa of seeAlso; let i - index" 
+								(click)="getDef(sa)">
+			{{sa}} - 
+		</i> 
+	</div>
 </div>
